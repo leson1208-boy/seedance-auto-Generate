@@ -240,6 +240,19 @@ powershell -ExecutionPolicy Bypass -File .\register-task.ps1 -UnregisterAll
 
 ![联系方式](./微信图片_20260429094055_33_155.png)
 
+## 使用与转载声明
+
+允许使用、转载、二次修改和分发本仓库内容，但转载或分发时必须注明来源仓库和原作者。
+
+推荐署名格式：
+
+```text
+本文/工具/脚本基于 leson1208-boy 的 GitHub 仓库 seedance-auto-Generate 转发或修改：
+https://github.com/leson1208-boy/seedance-auto-Generate
+```
+
+完整说明见 [LICENSE](./LICENSE)。
+
 ## 说明
 
 本项目是 Dreamina CLI 的 Windows 自动化封装。实际视频生成能力、额度、登录和模型权限由 Dreamina 官方服务决定。
