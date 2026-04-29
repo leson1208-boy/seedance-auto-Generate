@@ -1,0 +1,12 @@
+﻿{
+    "input_path":  "D:\\task",
+    "login_timeout_minutes":  10,
+    "task_time":  "23:00",
+    "video_resolution":  "",
+    "max_poll_hours":  12,
+    "ratio":  "9:16",
+    "model_version":  "seedance2.0fast_vip",
+    "duration":  4,
+    "poll_interval_seconds":  600,
+    "log_retention_days":  30
+}
