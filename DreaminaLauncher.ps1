@@ -1196,7 +1196,11 @@ $openLogsButton.Add_Click({
     try {
         $config = ConvertTo-ValidatedConfig
         $motherRoot = Get-MotherRootForPath -InputPath $config.input_path
+<<<<<<< HEAD
         Open-ExplorerPath -Path (Join-Path (Join-Path $motherRoot 'tmp') 'logs')
+=======
+        Open-ExplorerPath -Path (Join-Path $motherRoot 'logs')
+>>>>>>> f1347f57a20eb222065b4721acfb8415734f5c59
     } catch {
         Show-WarnBox -Title $script:Text.open_folder -Message $_.Exception.Message
     }
