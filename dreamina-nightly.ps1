@@ -26,11 +26,7 @@ $script:CliInstallDir = Join-Path $env:USERPROFILE 'bin'
 $script:CliPath = Join-Path $script:CliInstallDir 'dreamina.exe'
 $script:CliVersionFile = Join-Path (Join-Path $env:USERPROFILE '.dreamina_cli') 'version.json'
 $script:CliCredentialFile = Join-Path (Join-Path $env:USERPROFILE '.dreamina_cli') 'credential.json'
-<<<<<<< HEAD
 $script:SkipDirectoryNames = @('done', 'tmp', 'state', 'logs', '_dreamina_tmp')
-=======
-$script:SkipDirectoryNames = @('done', 'state', 'logs', '_dreamina_tmp')
->>>>>>> f1347f57a20eb222065b4721acfb8415734f5c59
 $script:ImageExtensions = @('.png', '.jpg', '.jpeg', '.webp')
 $script:State = @{}
 $script:LogFile = $null
@@ -204,11 +200,7 @@ function Load-Config {
 function Initialize-Logging {
     param([Parameter(Mandatory = $true)][string]$MotherRoot)
 
-<<<<<<< HEAD
     $logsDir = Join-Path (Join-Path $MotherRoot 'tmp') 'logs'
-=======
-    $logsDir = Join-Path $MotherRoot 'logs'
->>>>>>> f1347f57a20eb222065b4721acfb8415734f5c59
     Ensure-Directory -Path $logsDir
     $script:LogFile = Join-Path $logsDir ("{0}.log" -f (Get-Date -Format 'yyyy-MM-dd'))
     if (-not (Test-Path -LiteralPath $script:LogFile)) {
@@ -222,11 +214,7 @@ function Cleanup-OldLogs {
         [Parameter(Mandatory = $true)][int]$RetentionDays
     )
 
-<<<<<<< HEAD
     $logsDir = Join-Path (Join-Path $MotherRoot 'tmp') 'logs'
-=======
-    $logsDir = Join-Path $MotherRoot 'logs'
->>>>>>> f1347f57a20eb222065b4721acfb8415734f5c59
     if (-not (Test-Path -LiteralPath $logsDir)) {
         return
     }
@@ -670,19 +658,12 @@ function Get-TaskFingerprint {
 function Get-StatePaths {
     param([Parameter(Mandatory = $true)][string]$MotherRoot)
 
-<<<<<<< HEAD
     $stateDir = Join-Path (Join-Path $MotherRoot 'tmp') 'state'
-=======
-    $stateDir = Join-Path $MotherRoot 'state'
->>>>>>> f1347f57a20eb222065b4721acfb8415734f5c59
     Ensure-Directory -Path $stateDir
     return @{
         state_dir = $stateDir
         state_file = Join-Path $stateDir 'tasks.json'
-<<<<<<< HEAD
         legacy_state_file = Join-Path (Join-Path $MotherRoot 'state') 'tasks.json'
-=======
->>>>>>> f1347f57a20eb222065b4721acfb8415734f5c59
     }
 }
 
@@ -690,12 +671,9 @@ function Load-State {
     param([Parameter(Mandatory = $true)][string]$MotherRoot)
 
     $paths = Get-StatePaths -MotherRoot $MotherRoot
-<<<<<<< HEAD
     if (-not (Test-Path -LiteralPath $paths.state_file) -and (Test-Path -LiteralPath $paths.legacy_state_file)) {
         Copy-Item -LiteralPath $paths.legacy_state_file -Destination $paths.state_file -Force
     }
-=======
->>>>>>> f1347f57a20eb222065b4721acfb8415734f5c59
     if (-not (Test-Path -LiteralPath $paths.state_file)) {
         return @{}
     }
@@ -856,11 +834,7 @@ function Download-TaskResult {
         [Parameter(Mandatory = $true)][string]$MotherRoot
     )
 
-<<<<<<< HEAD
     $tempRoot = Join-Path (Join-Path $MotherRoot 'tmp') '_dreamina_tmp'
-=======
-    $tempRoot = Join-Path $MotherRoot '_dreamina_tmp'
->>>>>>> f1347f57a20eb222065b4721acfb8415734f5c59
     Ensure-Directory -Path $tempRoot
     $downloadDir = Join-Path $tempRoot $Record.submit_id
     Ensure-Directory -Path $downloadDir

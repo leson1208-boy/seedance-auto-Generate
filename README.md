@@ -29,6 +29,7 @@
 
 | 文件 | 说明 |
 | --- | --- |
+| `DreaminaLauncher.exe` | Windows 一键启动器，双击打开图形界面 |
 | `DreaminaLauncher.ps1` | 图形界面启动器 |
 | `dreamina-nightly.ps1` | 主执行脚本，负责安装、登录、扫描、提交、轮询、下载 |
 | `register-task.ps1` | Windows 计划任务注册、查询、取消脚本 |
@@ -40,7 +41,7 @@
 ## 快速开始
 
 1. 下载或克隆本仓库到本地。
-2. 双击 `Start Dreamina.vbs` 打开图形界面。
+2. 双击 `DreaminaLauncher.exe` 打开图形界面，也可以双击 `Start Dreamina.vbs`。
 3. 点击 `检测环境`。
 4. 如未安装 CLI，点击 `安装/更新 CLI`。
 5. 点击 `登录`，按即梦 CLI 提示完成登录。

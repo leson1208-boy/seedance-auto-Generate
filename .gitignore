@@ -1,0 +1,5 @@
+tmp_exe_build/
+tmp/
+done/
+_probe_download/
+*.log

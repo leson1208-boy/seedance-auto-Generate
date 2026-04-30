@@ -114,7 +114,7 @@ $script:Text = @{
     confirm_unregister_fmt = U '\u786e\u5b9a\u8981\u53d6\u6d88\u8ba1\u5212\u4efb\u52a1\u201c{0}\u201d\u5417\uff1f'
     confirm_unregister_all = U '\u786e\u5b9a\u8981\u53d6\u6d88\u5168\u90e8\u0020\u0044\u0072\u0065\u0061\u006d\u0069\u006e\u0061\u0020\u8ba1\u5212\u4efb\u52a1\u5417\uff1f'
     launcher_ready = U '\u542f\u52a8\u5668\u5df2\u5c31\u7eea'
-    use_vbs = U '\u65e5\u5e38\u4f7f\u7528\u8bf7\u53cc\u51fb\u0020\u0053\u0074\u0061\u0072\u0074\u0020\u0044\u0072\u0065\u0061\u006d\u0069\u006e\u0061\u002e\u0076\u0062\u0073'
+    use_vbs = U '\u65e5\u5e38\u4f7f\u7528\u8bf7\u53cc\u51fb\u0020\u0044\u0072\u0065\u0061\u006d\u0069\u006e\u0061\u004c\u0061\u0075\u006e\u0063\u0068\u0065\u0072\u002e\u0065\u0078\u0065'
     use_bat = U '\u6392\u67e5\u95ee\u9898\u8bf7\u53cc\u51fb\u0020\u0053\u0074\u0061\u0072\u0074\u0020\u0044\u0072\u0065\u0061\u006d\u0069\u006e\u0061\u002e\u0062\u0061\u0074'
 }
 
@@ -654,7 +654,7 @@ function Invoke-BackgroundCommand {
             ('$exitCodePath = {0}' -f (Quote-PowerShellLiteral -Value $exitCodePath)),
             '$code = 0',
             'try {',
-            '    $pwshArgs = @(''-NoProfile'', ''-ExecutionPolicy'', ''Bypass'', ''-File'', $target) + $targetArgs',
+            '    $pwshArgs = @(''-NoProfile'', ''-ExecutionPolicy'', ''Bypass'', ''-WindowStyle'', ''Hidden'', ''-File'', $target) + $targetArgs',
             '    & powershell.exe @pwshArgs',
             '    if ($null -ne $LASTEXITCODE) { $code = [int]$LASTEXITCODE } elseif ($?) { $code = 0 } else { $code = 1 }',
             '} catch {',
@@ -665,7 +665,7 @@ function Invoke-BackgroundCommand {
             'exit $code'
         )
         Set-Content -LiteralPath $wrapperPath -Value ($wrapperLines -join [Environment]::NewLine) -Encoding UTF8
-        $processArgs = @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', $wrapperPath)
+        $processArgs = @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-WindowStyle', 'Hidden', '-File', $wrapperPath)
 
         $process = Start-Process -FilePath 'powershell.exe' `
             -ArgumentList (ConvertTo-CommandLine -Arguments $processArgs) `
@@ -759,7 +759,7 @@ function Invoke-BackgroundCommand {
 
                     $exitCode = $script:BackgroundState.Process.ExitCode
                     if ($null -eq $exitCode -and (Test-Path -LiteralPath $script:BackgroundState.ExitCodePath)) {
-                        $exitCodeText = (Read-LauncherTextFile -Path $script:BackgroundState.ExitCodePath)
+                        $exitCodeText = Read-LauncherTextFile -Path $script:BackgroundState.ExitCodePath
                         if (-not [string]::IsNullOrWhiteSpace($exitCodeText)) {
                             $exitCode = [int]$exitCodeText.Trim()
                         }
@@ -845,8 +845,7 @@ function Open-ExplorerPath {
     param([Parameter(Mandatory = $true)][string]$Path)
 
     if (-not (Test-Path -LiteralPath $Path)) {
-        Show-WarnBox -Title $script:Text.open_folder -Message ("{0}: {1}" -f $script:Text.path_missing, $Path)
-        return
+        New-Item -ItemType Directory -Path $Path -Force | Out-Null
     }
 
     Start-Process -FilePath 'explorer.exe' -ArgumentList @($Path) | Out-Null
@@ -928,6 +927,11 @@ $form.Controls.Add($titleLabel)
 $subtitleLabel = New-Label -Text $script:Text.subtitle -X 24 -Y 50 -Width 680
 $subtitleLabel.ForeColor = [System.Drawing.Color]::FromArgb(95, 95, 95)
 $form.Controls.Add($subtitleLabel)
+
+$contactLabel = New-Label -Text 'V:jhy0246' -X 1010 -Y 28 -Width 120
+$contactLabel.Font = New-Object System.Drawing.Font('Segoe UI Semibold', 10)
+$contactLabel.ForeColor = [System.Drawing.Color]::FromArgb(88, 88, 88)
+$form.Controls.Add($contactLabel)
 
 $envGroup = New-Object System.Windows.Forms.GroupBox
 $envGroup.Text = $script:Text.group_env
@@ -1196,11 +1200,7 @@ $openLogsButton.Add_Click({
     try {
         $config = ConvertTo-ValidatedConfig
         $motherRoot = Get-MotherRootForPath -InputPath $config.input_path
-<<<<<<< HEAD
         Open-ExplorerPath -Path (Join-Path (Join-Path $motherRoot 'tmp') 'logs')
-=======
-        Open-ExplorerPath -Path (Join-Path $motherRoot 'logs')
->>>>>>> f1347f57a20eb222065b4721acfb8415734f5c59
     } catch {
         Show-WarnBox -Title $script:Text.open_folder -Message $_.Exception.Message
     }
